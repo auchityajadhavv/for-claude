@@ -1,0 +1,106 @@
+.pricing__head {
+  max-width: 40rem;
+  margin-bottom: 48px;
+}
+.pricing__head .eyebrow {
+  margin-bottom: 20px;
+}
+
+.pricing__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
+}
+
+.pricing__card {
+  border-radius: var(--radius-lg);
+  padding: clamp(24px, 3vw, 34px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+.pricing__card.is-featured {
+  border-color: rgba(139, 92, 246, 0.55);
+  background: linear-gradient(160deg, rgba(124, 58, 237, 0.16), rgba(255, 255, 255, 0.02));
+  box-shadow: var(--glow-purple);
+  transform: translateY(-8px);
+}
+
+.pricing__badge {
+  position: absolute;
+  top: -11px;
+  left: clamp(24px, 3vw, 34px);
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--btn-text);
+  background: var(--btn);
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.pricing__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: -0.02em;
+}
+.pricing__note {
+  color: var(--text2);
+  font-size: 0.9rem;
+  min-height: 2.6em;
+}
+.pricing__price {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin: 6px 0 4px;
+}
+.pricing__cur {
+  font-size: 1.4rem;
+  color: var(--text2);
+}
+.pricing__amt {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.4rem, 2rem + 2vw, 3.2rem);
+  letter-spacing: -0.04em;
+}
+.pricing__per {
+  font-size: 0.85rem;
+  color: var(--text3);
+}
+.pricing__features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 8px 0 20px;
+}
+.pricing__feat {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.94rem;
+  color: var(--text2);
+}
+.pricing__check {
+  color: var(--lilac2);
+  flex-shrink: 0;
+}
+.pricing__cta {
+  margin-top: auto;
+  width: 100%;
+}
+
+@media (max-width: 900px) {
+  .pricing__grid {
+    grid-template-columns: 1fr;
+    max-width: 30rem;
+    margin-inline: auto;
+  }
+  .pricing__card.is-featured {
+    transform: none;
+  }
+}

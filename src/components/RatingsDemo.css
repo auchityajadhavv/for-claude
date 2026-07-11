@@ -1,0 +1,126 @@
+.rdemo {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: clamp(16px, 3vw, 36px);
+}
+
+.rdemo__left,
+.rdemo__right {
+  border-radius: var(--radius-lg);
+  padding: clamp(22px, 3vw, 32px);
+}
+
+.rdemo__left .eyebrow {
+  margin-bottom: 24px;
+}
+
+.rdemo__bars {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.rdemo__row {
+  display: grid;
+  grid-template-columns: 5.5rem 1fr 2.6rem;
+  align-items: center;
+  gap: 14px;
+}
+.rdemo__label {
+  color: var(--text2);
+  font-size: 0.92rem;
+}
+.rdemo__track {
+  height: 6px;
+  border-radius: 999px;
+  background: #ffffff10;
+  overflow: hidden;
+}
+.rdemo__fill {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  /* the private-page bars are UI → purple */
+  background: linear-gradient(90deg, var(--purple), var(--lilac2));
+}
+.rdemo__num {
+  text-align: right;
+  color: var(--text);
+  font-size: 0.9rem;
+}
+
+.rdemo__arrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text3);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.rdemo__gcard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.rdemo__ghead {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.rdemo__gdot {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: linear-gradient(140deg, var(--purple2), var(--lilac));
+  flex-shrink: 0;
+}
+.rdemo__gname {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.rdemo__gmeta {
+  font-size: 0.75rem;
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+.rdemo__gbody {
+  color: var(--text2);
+  line-height: 1.55;
+  min-height: 6.5em;
+  font-size: 0.98rem;
+}
+.rdemo__caret {
+  display: inline-block;
+  width: 2px;
+  height: 1.05em;
+  background: var(--lilac2);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: rdemo-blink 1s steps(2) infinite;
+}
+@keyframes rdemo-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.rdemo__post {
+  align-self: flex-start;
+  font-size: 0.9rem;
+  padding: 0.7em 1.3em;
+}
+
+@media (max-width: 860px) {
+  .rdemo {
+    grid-template-columns: 1fr;
+  }
+  .rdemo__arrow {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .rdemo__arrow svg {
+    transform: rotate(90deg);
+  }
+}

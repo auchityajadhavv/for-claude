@@ -13,12 +13,37 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Firefox: thin themed scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--lilac) transparent;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+}
+
+/* main scrollbar — dark track, purple→lilac gradient thumb (WebKit/Chromium) */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a12;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 3px solid #0a0a12; /* inset so the thumb reads as a slim pill */
+  background: linear-gradient(180deg, var(--purple2), var(--lilac));
+  background-clip: content-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--lilac), var(--lilac2));
+  background-clip: content-box;
+}
+::-webkit-scrollbar-corner {
+  background: #0a0a12;
 }
 
 body {

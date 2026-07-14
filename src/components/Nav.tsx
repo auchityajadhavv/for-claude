@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Logo from './Logo'
+import { openDemo } from '../lib/openDemo'
 import './Nav.css'
 
 const LINKS = [
@@ -69,9 +70,9 @@ export default function Nav() {
         </nav>
 
         <div className="nav__actions">
-          <a href="#cta" className="btn btn-primary nav__cta">
+          <button className="btn btn-primary nav__cta" onClick={() => openDemo()}>
             Book a demo
-          </a>
+          </button>
           <button
             className={`nav__burger ${open ? 'is-open' : ''}`}
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -92,9 +93,15 @@ export default function Nav() {
               {l.label}
             </a>
           ))}
-          <a href="#cta" className="btn btn-primary nav__sheetCta" onClick={() => setOpen(false)}>
+          <button
+            className="btn btn-primary nav__sheetCta"
+            onClick={() => {
+              setOpen(false)
+              openDemo()
+            }}
+          >
             Book a demo
-          </a>
+          </button>
         </div>
       </div>
     </header>

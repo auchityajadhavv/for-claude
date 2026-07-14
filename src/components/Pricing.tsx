@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import { openDemo } from '../lib/openDemo'
 import './Pricing.css'
 
 const PLANS = [
@@ -70,12 +71,12 @@ export default function Pricing() {
                   </li>
                 ))}
               </ul>
-              <a
-                href="#cta"
+              <button
                 className={`btn ${p.featured ? 'btn-primary' : 'btn-ghost'} pricing__cta`}
+                onClick={() => openDemo(p.name)}
               >
                 {p.featured ? 'Start with Growth' : `Choose ${p.name}`}
-              </a>
+              </button>
             </Reveal>
           ))}
         </div>

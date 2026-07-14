@@ -1,5 +1,6 @@
 import AmbientField from '../three/AmbientField'
 import TryDemo from './TryDemo'
+import { openDemo } from '../lib/openDemo'
 import './Hero.css'
 
 const STATS = [
@@ -24,7 +25,7 @@ export default function Hero() {
           private feedback, then a Google review.
         </p>
         <div className="hero__actions">
-          <a href="#cta" className="btn btn-primary">Book a demo</a>
+          <button className="btn btn-primary" onClick={() => openDemo()}>Book a demo</button>
           <TryDemo label="Try it yourself" variant="ghost" />
           <a href="#flow" className="hero__link">See how it works →</a>
         </div>

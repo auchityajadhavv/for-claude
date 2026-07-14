@@ -11,6 +11,7 @@ import Pricing from './components/Pricing'
 import Faq from './components/Faq'
 import Cta from './components/Cta'
 import Footer from './components/Footer'
+import DemoModal from './components/DemoModal'
 
 // map pulls in maplibre-gl (~200kb gzip) and lives below the fold → code-split it
 const MumbaiMap = lazy(() => import('./map/MumbaiMap'))
@@ -35,6 +36,7 @@ export default function App() {
         <Cta />
       </main>
       <Footer />
+      <DemoModal />
     </>
   )
 }

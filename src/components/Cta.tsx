@@ -1,4 +1,5 @@
 import Reveal from './Reveal'
+import { openDemo } from '../lib/openDemo'
 import './Cta.css'
 
 export default function Cta() {
@@ -13,9 +14,9 @@ export default function Cta() {
             Place your first Revora stand this week and watch the reviews follow.
           </p>
           <div className="cta__actions">
-            <a href="#cta" className="btn btn-primary cta__primary">
+            <button className="btn btn-primary cta__primary" onClick={() => openDemo()}>
               Book a demo
-            </a>
+            </button>
             <a href="#pricing" className="btn btn-ghost">
               See pricing
             </a>

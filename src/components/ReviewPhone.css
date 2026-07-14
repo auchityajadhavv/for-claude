@@ -135,14 +135,27 @@
 .rp__cardTier {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13.5px;
   color: #cfc4ea;
+  display: inline-block;
+  animation: rp-flip 0.34s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transform-origin: center bottom;
+}
+@keyframes rp-flip {
+  0% {
+    opacity: 0;
+    transform: rotateX(-70deg) translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
-/* slider (from the reference file) */
+/* slider — matched to the reference file */
 .rp__slider {
   position: relative;
-  height: 22px;
+  height: 34px;
   display: flex;
   align-items: center;
 }
@@ -176,8 +189,8 @@
   position: absolute;
   top: 50%;
   left: calc(var(--v) * 100%);
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   transform: translate(-50%, -50%);
   background: radial-gradient(circle at 36% 30%, #fff, #e6def7 60%, #b7a9de);

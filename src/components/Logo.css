@@ -4,74 +4,60 @@
   gap: 11px;
 }
 
-/* 3D orbit mark */
+/* fixed tilt; the sphere inside spins on Y (the "tumble" from the reference) */
 .logo__mark {
+  width: 26px;
+  height: 26px;
   position: relative;
-  width: 30px;
-  height: 30px;
+  transform: rotateX(16deg);
   transform-style: preserve-3d;
-  filter: drop-shadow(0 0 6px rgba(154, 127, 214, 0.35));
+  filter: drop-shadow(0 0 5px rgba(154, 127, 214, 0.4));
+}
+
+.logo__sphere {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: logo-tumble 9s linear infinite;
+}
+@keyframes logo-tumble {
+  to {
+    transform: rotateY(360deg);
+  }
 }
 
 .logo__ring {
   position: absolute;
-  inset: 1px;
+  inset: 0;
+  border: 1px solid rgba(226, 220, 245, 0.32);
   border-radius: 50%;
-  border: 1px solid rgba(196, 166, 255, 0.55);
 }
-
-/* the tilted ring the dot rides */
 .logo__ring--tilt {
-  border-color: rgba(154, 127, 214, 0.7);
-  transform: rotateX(68deg);
+  border-color: rgba(154, 127, 214, 0.6);
+  transform: rotateX(66deg);
 }
 
-/* orbit carrier: spins the dot around the tilted plane */
-.logo__orbit {
+/* the dot rides the tilted ring plane, at its edge → orbits as the sphere spins */
+.logo__dotWrap {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  transform: rotateX(68deg);
-  animation: orbit-spin 4.2s linear infinite;
+  transform: rotateX(66deg);
 }
-
-@keyframes orbit-spin {
-  from {
-    transform: rotateX(68deg) rotateZ(0deg);
-  }
-  to {
-    transform: rotateX(68deg) rotateZ(360deg);
-  }
-}
-
 .logo__dot {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 5px;
-  height: 5px;
-  margin: -2.5px 0 0 -2.5px;
+  width: 4.5px;
+  height: 4.5px;
+  margin: -2.25px 0 0 -2.25px;
   border-radius: 50%;
-  background: #fff;
-  box-shadow: 0 0 6px 2px rgba(196, 166, 255, 0.95), 0 0 14px 4px rgba(124, 58, 237, 0.5);
-  transform: translateX(12px);
+  background: var(--lilac);
+  box-shadow: 0 0 9px var(--lilac), 0 0 4px #fff;
+  transform: translateX(11px);
 }
 
-/* central nucleus */
-.logo__mark::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  margin: -2px 0 0 -2px;
-  border-radius: 50%;
-  background: var(--lilac2);
-  box-shadow: 0 0 5px rgba(196, 166, 255, 0.9);
-}
-
-.logo__mark.is-static .logo__orbit {
+.logo__mark.is-static .logo__sphere {
   animation: none;
 }
 

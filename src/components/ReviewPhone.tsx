@@ -110,25 +110,25 @@ export default function ReviewPhone() {
         setPhase('rate')
         setTyped('')
         setVals({ food: 0, service: 0, ambience: 0 })
-        await sleep(700)
-        // slide each rating in turn
+        await sleep(1000)
+        // slide each rating in turn — calm, deliberate
         for (const m of METRICS) {
           if (cancelled.current) return
-          await animateSlider(m.key, m.target, 620)
-          await sleep(260)
+          await animateSlider(m.key, m.target, 1100)
+          await sleep(520)
         }
-        await sleep(650)
+        await sleep(900)
         if (cancelled.current) return
         // move to review + type it out
         const review = writeReview(finalState.current)
         setPhase('review')
-        await sleep(500)
+        await sleep(700)
         for (let i = 1; i <= review.length; i++) {
           if (cancelled.current) return
           setTyped(review.slice(0, i))
-          await sleep(15)
+          await sleep(32)
         }
-        await sleep(3200) // hold
+        await sleep(5000) // hold so it can actually be read
       }
     }
     run()
@@ -163,7 +163,10 @@ export default function ReviewPhone() {
                       <div className={`rp__card ${v > 0.02 ? 'is-active' : ''}`} key={m.key}>
                         <div className="rp__cardTop">
                           <span className="rp__cardName">{m.label}</span>
-                          <span className="rp__cardTier">{tierOf(v)}</span>
+                          {/* keyed span → replays the flip whenever the tier word changes */}
+                          <span className="rp__cardTier" key={tierOf(v)}>
+                            {tierOf(v)}
+                          </span>
                         </div>
                         <div className="rp__slider" style={{ ['--v' as string]: v }}>
                           <div className="rp__rail">

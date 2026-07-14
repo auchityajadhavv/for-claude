@@ -22,9 +22,9 @@ export default function TapToReview() {
           </p>
         </Reveal>
 
-        <div className="flow__stage">
-          {/* the tap */}
-          <Reveal className="flow__tap">
+        <Reveal className="flow__stage">
+          {/* the tap — a card standing on the table */}
+          <div className="flow__tap">
             <div className="flow__tapMedia">
               <span className="flow__ripple" aria-hidden="true" />
               <span className="flow__ripple flow__ripple--2" aria-hidden="true" />
@@ -40,21 +40,24 @@ export default function TapToReview() {
               />
               <span className="flow__tapTag mono">NFC · tap to open</span>
             </div>
-          </Reveal>
-
-          {/* the flow connector */}
-          <div className="flow__link" aria-hidden="true">
-            <span className="flow__linkLabel mono">opens</span>
-            <svg viewBox="0 0 80 16" className="flow__linkArrow" preserveAspectRatio="none">
-              <path d="M0 8h72m0 0-7-6m7 6-7 6" stroke="currentColor" strokeWidth="1.3" fill="none" />
-            </svg>
+            <span className="flow__reflection" aria-hidden="true" />
           </div>
 
-          {/* the review page, live */}
-          <Reveal className="flow__phone" delay={120}>
+          {/* the NFC signal travelling from card → phone */}
+          <div className="flow__link" aria-hidden="true">
+            <span className="flow__linkLabel mono">signal</span>
+            <div className="flow__wire">
+              <span className="flow__pulse" />
+              <span className="flow__pulse flow__pulse--2" />
+            </div>
+          </div>
+
+          {/* the review page waking up */}
+          <div className="flow__phone">
+            <span className="flow__phoneGlow" aria-hidden="true" />
             <ReviewPhone />
-          </Reveal>
-        </div>
+          </div>
+        </Reveal>
 
         <ol className="flow__steps">
           {STEPS.map((s, i) => (

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useReducedMotion } from '../hooks/useReducedMotion'
 import { useInView } from '../hooks/useInView'
+import './Logo.css'
 import './ReviewPhone.css'
 
 /* ---- review writer (ported from the REVORA review page) ---- */
@@ -146,10 +147,18 @@ export default function ReviewPhone() {
         <div className="phone__island" />
         <div className="phone__screen">
           <div className={`rp ${phase === 'review' ? 'is-review' : ''}`}>
-            {/* header */}
+            {/* header — brand + the orbiting mark (same as the logo) */}
             <div className="rp__head">
               <span className="rp__brand">REVORA</span>
-              <span className="rp__dot" />
+              <span className={`logo__mark rp__mark ${reduced ? 'is-static' : ''}`} aria-hidden="true">
+                <span className="logo__sphere">
+                  <i className="logo__ring" />
+                  <i className="logo__ring logo__ring--tilt" />
+                  <span className="logo__dotWrap">
+                    <b className="logo__dot" />
+                  </span>
+                </span>
+              </span>
             </div>
 
             {phase === 'rate' ? (
@@ -178,7 +187,7 @@ export default function ReviewPhone() {
                     )
                   })}
                 </div>
-                <div className="rp__cta rp__cta--ghost">Continue</div>
+                <div className="rp__cta">Continue</div>
               </div>
             ) : (
               <div className="rp__review">

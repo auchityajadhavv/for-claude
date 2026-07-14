@@ -1,5 +1,6 @@
 import Reveal from './Reveal'
 import ReviewPhone from './ReviewPhone'
+import TryDemo from './TryDemo'
 import './TapToReview.css'
 
 const STEPS = [
@@ -57,6 +58,11 @@ export default function TapToReview() {
             <span className="flow__phoneGlow" aria-hidden="true" />
             <ReviewPhone />
           </div>
+        </Reveal>
+
+        <Reveal className="flow__try">
+          <TryDemo label="Try it yourself" />
+          <span className="flow__tryNote mono">No sign-up — it opens the real guest flow</span>
         </Reveal>
 
         <ol className="flow__steps">

@@ -148,6 +148,25 @@
   50% { opacity: 0.9; }
 }
 
+/* try-it-yourself */
+.flow__try {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: clamp(48px, 7vw, 84px);
+}
+.flow__try .btn {
+  padding: 0.95em 1.9em;
+  font-size: 1rem;
+  gap: 10px;
+}
+.flow__tryNote {
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--text3);
+}
+
 /* steps strip */
 .flow__steps {
   display: grid;

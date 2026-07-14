@@ -1,0 +1,77 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo__mark {
+  display: inline-grid;
+  place-items: center;
+  filter: drop-shadow(0 0 6px rgba(154, 127, 214, 0.35));
+}
+
+.logo__ring {
+  fill: none;
+  stroke: var(--lilac);
+  stroke-width: 1.1;
+  opacity: 0.5;
+  transform-origin: center;
+}
+
+.logo__ring--tilt {
+  stroke: var(--lilac2);
+  opacity: 0.7;
+}
+
+.logo__nucleus {
+  fill: var(--lilac2);
+  filter: drop-shadow(0 0 4px rgba(196, 166, 255, 0.9));
+}
+
+.logo__dot {
+  fill: #ffffff;
+}
+
+/* the dot orbits the tilted ring: rotate a point at radius 15 around centre
+   (24,24), then squash Y to 0.43 → an ellipse rx15 / ry~6.4. */
+.logo__orbit {
+  transform-box: view-box;
+  transform-origin: 24px 24px;
+  animation: logo-orbit 4s linear infinite;
+}
+
+@keyframes logo-orbit {
+  from {
+    transform: rotate(0deg) scaleY(0.43);
+  }
+  to {
+    transform: rotate(360deg) scaleY(0.43);
+  }
+}
+
+.logo__dotGlow {
+  animation: logo-trail 4s ease-in-out infinite;
+}
+
+@keyframes logo-trail {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.logo__mark.is-static .logo__orbit {
+  animation: none;
+  transform: scaleY(0.43);
+}
+.logo__mark.is-static .logo__dotGlow {
+  animation: none;
+}
+
+.logo__wordmark {
+  height: 22px;
+  width: auto;
+}

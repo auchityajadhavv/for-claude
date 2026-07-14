@@ -1,0 +1,122 @@
+.wr__grid {
+  display: grid;
+  grid-template-columns: 1fr 0.95fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+
+.wr__copy .eyebrow {
+  margin-bottom: 20px;
+}
+.wr__h2 {
+  margin-bottom: 40px;
+}
+
+.wr__points {
+  display: flex;
+  flex-direction: column;
+  gap: 26px;
+}
+.wr__point {
+  display: flex;
+  gap: 18px;
+}
+.wr__pointK {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 4px;
+  min-width: 4.5rem;
+}
+.wr__pointT {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  letter-spacing: -0.015em;
+  margin-bottom: 4px;
+}
+.wr__pointB {
+  color: var(--text2);
+  font-size: 0.95rem;
+  max-width: 42ch;
+}
+
+/* ranking widget */
+.wr__widget {
+  border-radius: var(--radius-lg);
+  padding: 26px;
+  position: sticky;
+  top: 100px;
+}
+.wr__widgetHead {
+  margin-bottom: 18px;
+}
+.wr__widgetLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--text3);
+}
+.wr__ranks {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.wr__rank {
+  display: grid;
+  grid-template-columns: 1.6rem 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  background: #ffffff05;
+}
+.wr__rank.is-you {
+  background: linear-gradient(100deg, rgba(124, 58, 237, 0.22), rgba(124, 58, 237, 0.06));
+  border-color: rgba(139, 92, 246, 0.5);
+  box-shadow: var(--glow-purple);
+}
+.wr__rankNo {
+  font-size: 0.9rem;
+  color: var(--text3);
+}
+.is-you .wr__rankNo {
+  color: var(--lilac2);
+}
+.wr__rankMain {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.wr__rankName {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+.wr__rankTag {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+.is-you .wr__rankTag {
+  color: var(--lilac);
+}
+.wr__rankScore {
+  font-size: 0.95rem;
+  color: var(--text);
+  white-space: nowrap;
+}
+.wr__rankCount {
+  color: var(--text3);
+}
+
+@media (max-width: 900px) {
+  .wr__grid {
+    grid-template-columns: 1fr;
+  }
+  .wr__widget {
+    position: static;
+  }
+}

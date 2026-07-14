@@ -1,0 +1,115 @@
+.mm__head {
+  max-width: 40rem;
+  margin-bottom: 40px;
+}
+.mm__head .eyebrow {
+  margin-bottom: 20px;
+}
+
+/* the map is always boxed — never a full-page background */
+.mm__box {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+.mm__inner {
+  position: relative;
+  height: clamp(360px, 56vh, 560px);
+  overflow: hidden;
+  background: #0b0b12;
+  /* placeholder grid + warm glow, visible until map tiles paint over it */
+  background-image: radial-gradient(60% 60% at 50% 45%, rgba(124, 58, 237, 0.1), transparent 70%),
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: auto, 44px 44px, 44px 44px;
+}
+.mm__canvas {
+  position: absolute;
+  inset: 0;
+}
+
+/* keep the box edges deep so the map reads as inset */
+.mm__inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 90px 20px rgba(6, 6, 11, 0.7);
+}
+
+.mm__badge {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 15px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+.mm__badgeDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: #46d16b;
+  box-shadow: 0 0 0 0 rgba(70, 209, 107, 0.6);
+  animation: mm-live 2s ease-out infinite;
+}
+@keyframes mm-live {
+  0% {
+    box-shadow: 0 0 0 0 rgba(70, 209, 107, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgba(70, 209, 107, 0);
+  }
+}
+
+/* pins — UI purple */
+.mm-pin {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--purple2);
+  border: 1.5px solid #d9c9ff;
+  box-shadow: 0 0 10px 1px rgba(139, 92, 246, 0.7);
+  cursor: pointer;
+}
+.mm-pin--live {
+  width: 15px;
+  height: 15px;
+  background: var(--lilac2);
+}
+.mm-pin--pulse {
+  position: relative;
+}
+.mm-pin--pulse::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(139, 92, 246, 0.6);
+  animation: mm-pulse 2.4s ease-out infinite;
+}
+.mm-pin--live.mm-pin--pulse::after {
+  animation-duration: 1.8s;
+}
+@keyframes mm-pulse {
+  0% {
+    transform: scale(0.6);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+/* tame default maplibre controls to match the dark theme */
+.mm__inner .maplibregl-ctrl-attrib,
+.mm__inner .maplibregl-ctrl-logo {
+  opacity: 0.35;
+}

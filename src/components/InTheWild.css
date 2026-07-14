@@ -1,0 +1,47 @@
+.itw {
+  position: relative;
+  min-height: 82svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+.itw__media {
+  position: absolute;
+  inset: 0;
+}
+.itw__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% center;
+}
+.itw__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 6, 11, 0.96) 0%,
+    rgba(6, 6, 11, 0.9) 34%,
+    rgba(6, 6, 11, 0.5) 58%,
+    rgba(6, 6, 11, 0.05) 80%
+  );
+}
+.itw__inner {
+  position: relative;
+  padding-block: clamp(48px, 8vw, 110px);
+}
+.itw__copy {
+  max-width: 34rem;
+}
+.itw__copy .eyebrow {
+  margin-bottom: 18px;
+}
+.itw__h2 {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 700px) {
+  .itw__scrim {
+    background: linear-gradient(0deg, rgba(6, 6, 11, 0.95) 10%, rgba(6, 6, 11, 0.4) 60%);
+  }
+}

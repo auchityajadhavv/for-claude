@@ -1,0 +1,214 @@
+/* wrap provides the scroll length: 1 hero screen + ~3 screens of story */
+.hero-wrap {
+  position: relative;
+  height: 420vh;
+}
+
+.hero-wrap.is-reduced {
+  height: auto;
+}
+
+/* sticky stage sticks through the whole wrap */
+.hero-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.is-reduced .hero-stage {
+  position: relative;
+  height: 82svh;
+}
+
+/* canvas occupies the RIGHT half on desktop */
+.hero-stage__canvas {
+  position: absolute;
+  inset: 0 0 0 44%;
+  height: 100%;
+}
+
+/* beat text sits over the dark left zone — never overlapping the product on the right */
+.hero-beats {
+  position: absolute;
+  left: 0;
+  right: 46%;
+  bottom: 16vh;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  padding-inline: var(--gutter);
+}
+
+.hero-beat {
+  grid-area: 1 / 1;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 1rem + 3vw, 3.4rem);
+  letter-spacing: -0.03em;
+  text-align: center;
+  opacity: 0;
+  max-width: 16ch;
+  background: linear-gradient(180deg, #fff, #cbbff0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 8px 40px rgba(124, 58, 237, 0.15);
+}
+
+/* ---------- hero copy ---------- */
+.hero-copy {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100svh;
+  pointer-events: none;
+}
+
+.hero-copy__inner {
+  max-width: 42rem;
+  pointer-events: auto;
+}
+
+.hero-copy .eyebrow {
+  margin-bottom: 26px;
+}
+
+.hero-h1 {
+  font-size: var(--fs-h1);
+  line-height: 0.98;
+  margin-bottom: 26px;
+}
+
+.hero-sub {
+  margin-bottom: 38px;
+  max-width: 34ch;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: clamp(24px, 4vw, 52px);
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hero-stat__big {
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2rem);
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.hero-stat__label {
+  font-size: 0.74rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.hero-scrollcue {
+  position: absolute;
+  bottom: 34px;
+  left: var(--gutter);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.7rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--text3);
+}
+
+.hero-scrollcue__line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--lilac), transparent);
+  position: relative;
+  overflow: hidden;
+}
+.hero-scrollcue__line::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 20px;
+  background: var(--lilac2);
+  animation: cue-slide 2.4s ease-in-out infinite;
+}
+@keyframes cue-slide {
+  0% {
+    transform: translateX(-20px);
+  }
+  100% {
+    transform: translateX(60px);
+  }
+}
+
+/* reduced-motion static story */
+.hero-story-static {
+  padding-block: 60px 100px;
+  display: grid;
+  gap: 14px;
+}
+.hero-story-static__line {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1rem + 2vw, 2.4rem);
+  letter-spacing: -0.02em;
+  color: var(--text2);
+}
+
+/* ---------- responsive: stack (product then text, centered) ---------- */
+@media (max-width: 900px) {
+  .hero-wrap {
+    height: auto;
+  }
+  .hero-stage {
+    position: relative;
+    height: 62svh;
+    top: 0;
+  }
+  .hero-stage__canvas {
+    inset: 0;
+  }
+  .hero-beats {
+    display: none; /* beats only in the desktop pinned story */
+  }
+  .hero-copy {
+    position: relative;
+    height: auto;
+    padding-block: 12px 72px;
+    text-align: center;
+  }
+  .hero-copy__inner {
+    margin-inline: auto;
+  }
+  .hero-copy .eyebrow {
+    justify-content: center;
+  }
+  .hero-sub {
+    margin-inline: auto;
+  }
+  .hero-actions {
+    justify-content: center;
+  }
+  .hero-stats {
+    justify-content: center;
+  }
+  .hero-scrollcue {
+    display: none;
+  }
+}

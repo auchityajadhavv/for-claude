@@ -7,7 +7,13 @@ import './TryDemo.css'
  * (public/demo.html) inside a phone frame so a prospect can drag the sliders
  * and watch the AI write their review, hands-on.
  */
-export default function TryDemo({ label = 'Try it yourself' }: { label?: string }) {
+export default function TryDemo({
+  label = 'Try it yourself',
+  variant = 'primary',
+}: {
+  label?: string
+  variant?: 'primary' | 'ghost'
+}) {
   const [open, setOpen] = useState(false)
   const [loaded, setLoaded] = useState(false)
   const closeRef = useRef<HTMLButtonElement>(null)
@@ -30,7 +36,10 @@ export default function TryDemo({ label = 'Try it yourself' }: { label?: string 
 
   return (
     <>
-      <button className="btn btn-primary trydemo__btn" onClick={() => setOpen(true)}>
+      <button
+        className={`btn ${variant === 'ghost' ? 'btn-ghost' : 'btn-primary'} trydemo__btn`}
+        onClick={() => setOpen(true)}
+      >
         <span className="trydemo__spark" aria-hidden="true" />
         {label}
       </button>

@@ -97,6 +97,11 @@ ul {
   padding-block: var(--section-y);
 }
 
+/* keep section tops clear of the fixed nav when jumping to an anchor */
+:where(section[id], [id='top']) {
+  scroll-margin-top: 84px;
+}
+
 .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--fs-eyebrow);

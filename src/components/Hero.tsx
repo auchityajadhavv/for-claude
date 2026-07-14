@@ -1,4 +1,5 @@
 import AmbientField from '../three/AmbientField'
+import TryDemo from './TryDemo'
 import './Hero.css'
 
 const STATS = [
@@ -24,7 +25,8 @@ export default function Hero() {
         </p>
         <div className="hero__actions">
           <a href="#cta" className="btn btn-primary">Book a demo</a>
-          <a href="#flow" className="btn btn-ghost">See how it works</a>
+          <TryDemo label="Try it yourself" variant="ghost" />
+          <a href="#flow" className="hero__link">See how it works →</a>
         </div>
         <dl className="hero__stats">
           {STATS.map((s) => (

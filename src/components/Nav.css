@@ -41,6 +41,23 @@
   background: var(--glass);
 }
 
+.nav__link.is-active {
+  color: var(--text);
+}
+.nav__link.is-active::after {
+  content: '';
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 2px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--lilac2));
+}
+.nav__link {
+  position: relative;
+}
+
 .nav__actions {
   display: flex;
   align-items: center;

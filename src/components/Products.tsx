@@ -3,22 +3,22 @@ import './Products.css'
 
 const PRODUCTS = [
   {
+    line: 'The card',
     name: 'NFC Card',
-    line: 'The black acrylic card',
-    body: 'Tap-to-open on any modern phone, with a printed QR for everyone else. The piece your guests actually touch.',
-    img: '/assets/revora-product-3view.png',
+    body: 'Black acrylic with a gold-trimmed edge. Tap-to-open on any modern phone, printed QR for everyone else.',
+    spec: ['NFC + QR', 'Detachable', 'Your branding'],
   },
   {
+    line: 'The base',
     name: 'Acrylic Stand',
-    line: 'The brushed-gold base',
-    body: 'A weighted magnetic holder that seats the card at the perfect angle — and lets it detach in one clean lift.',
-    img: '/assets/revora-product-hero-marble.jpg',
+    body: 'A weighted, brushed-gold holder that seats the card at the perfect angle — and lets it lift out in one clean pull.',
+    spec: ['Brushed gold', 'Magnetic', 'Engraved'],
   },
   {
+    line: 'Made yours',
     name: 'Custom Branding',
-    line: 'Your name, engraved',
-    body: 'Your logo and colours on the card face, your venue engraved in the gold. It reads as yours, not ours.',
-    img: '/assets/revora-lifestyle.png',
+    body: 'Your logo and colours on the card face, your venue engraved into the gold. It reads as yours, not ours.',
+    spec: ['Logo print', 'Colour match', 'Venue name'],
   },
 ]
 
@@ -34,14 +34,14 @@ export default function Products() {
         <div className="prod__grid">
           {PRODUCTS.map((p, i) => (
             <Reveal as="article" key={p.name} className="prod__card glass" delay={i * 70}>
-              <div className="prod__media">
-                <img src={p.img} alt={p.name} loading="lazy" />
-              </div>
-              <div className="prod__body">
-                <span className="mono prod__line">{p.line}</span>
-                <h3 className="prod__name">{p.name}</h3>
-                <p className="prod__desc">{p.body}</p>
-              </div>
+              <span className="mono prod__line">{p.line}</span>
+              <h3 className="prod__name">{p.name}</h3>
+              <p className="prod__desc">{p.body}</p>
+              <ul className="prod__spec">
+                {p.spec.map((s) => (
+                  <li key={s} className="prod__specItem">{s}</li>
+                ))}
+              </ul>
             </Reveal>
           ))}
         </div>

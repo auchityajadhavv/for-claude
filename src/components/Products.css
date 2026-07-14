@@ -14,41 +14,32 @@
 
 .prod__card {
   border-radius: var(--radius-lg);
-  overflow: hidden;
+  padding: clamp(26px, 3vw, 34px);
   display: flex;
   flex-direction: column;
-  transition: transform var(--dur-micro) var(--ease-out),
-    border-color var(--dur-micro) var(--ease-out);
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
+}
+/* gold hairline top edge — echoes the product's trim */
+.prod__card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201, 162, 75, 0.7), transparent);
 }
 .prod__card:hover {
   transform: translateY(-4px);
   border-color: rgba(139, 92, 246, 0.35);
 }
 
-.prod__media {
-  aspect-ratio: 4 / 3;
-  background: #050507;
-  overflow: hidden;
-}
-.prod__media img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease-signature);
-}
-.prod__card:hover .prod__media img {
-  transform: scale(1.04);
-}
-
-.prod__body {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
 .prod__line {
   font-size: 0.72rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--gold);
 }
@@ -61,6 +52,24 @@
 .prod__desc {
   color: var(--text2);
   font-size: 0.94rem;
+  margin-bottom: 6px;
+}
+.prod__spec {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+.prod__specItem {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--text2);
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #ffffff06;
 }
 
 @media (max-width: 900px) {

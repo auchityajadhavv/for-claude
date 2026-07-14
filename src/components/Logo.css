@@ -1,73 +1,77 @@
 .logo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 11px;
 }
 
+/* 3D orbit mark */
 .logo__mark {
-  display: inline-grid;
-  place-items: center;
+  position: relative;
+  width: 30px;
+  height: 30px;
+  transform-style: preserve-3d;
   filter: drop-shadow(0 0 6px rgba(154, 127, 214, 0.35));
 }
 
 .logo__ring {
-  fill: none;
-  stroke: var(--lilac);
-  stroke-width: 1.1;
-  opacity: 0.5;
-  transform-origin: center;
+  position: absolute;
+  inset: 1px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 166, 255, 0.55);
 }
 
+/* the tilted ring the dot rides */
 .logo__ring--tilt {
-  stroke: var(--lilac2);
-  opacity: 0.7;
+  border-color: rgba(154, 127, 214, 0.7);
+  transform: rotateX(68deg);
 }
 
-.logo__nucleus {
-  fill: var(--lilac2);
-  filter: drop-shadow(0 0 4px rgba(196, 166, 255, 0.9));
+/* orbit carrier: spins the dot around the tilted plane */
+.logo__orbit {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transform: rotateX(68deg);
+  animation: orbit-spin 4.2s linear infinite;
+}
+
+@keyframes orbit-spin {
+  from {
+    transform: rotateX(68deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(68deg) rotateZ(360deg);
+  }
 }
 
 .logo__dot {
-  fill: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 0 6px 2px rgba(196, 166, 255, 0.95), 0 0 14px 4px rgba(124, 58, 237, 0.5);
+  transform: translateX(12px);
 }
 
-/* the dot orbits the tilted ring: rotate a point at radius 15 around centre
-   (24,24), then squash Y to 0.43 → an ellipse rx15 / ry~6.4. */
-.logo__orbit {
-  transform-box: view-box;
-  transform-origin: 24px 24px;
-  animation: logo-orbit 4s linear infinite;
-}
-
-@keyframes logo-orbit {
-  from {
-    transform: rotate(0deg) scaleY(0.43);
-  }
-  to {
-    transform: rotate(360deg) scaleY(0.43);
-  }
-}
-
-.logo__dotGlow {
-  animation: logo-trail 4s ease-in-out infinite;
-}
-
-@keyframes logo-trail {
-  0%,
-  100% {
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
+/* central nucleus */
+.logo__mark::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--lilac2);
+  box-shadow: 0 0 5px rgba(196, 166, 255, 0.9);
 }
 
 .logo__mark.is-static .logo__orbit {
-  animation: none;
-  transform: scaleY(0.43);
-}
-.logo__mark.is-static .logo__dotGlow {
   animation: none;
 }
 

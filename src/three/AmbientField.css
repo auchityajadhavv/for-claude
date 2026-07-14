@@ -1,0 +1,9 @@
+.ambient {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.ambient canvas {
+  display: block;
+}

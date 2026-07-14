@@ -1,6 +1,7 @@
 import Reveal from './Reveal'
 import ReviewPhone from './ReviewPhone'
 import TryDemo from './TryDemo'
+import { useInView } from '../hooks/useInView'
 import './TapToReview.css'
 
 const STEPS = [
@@ -11,6 +12,9 @@ const STEPS = [
 ]
 
 export default function TapToReview() {
+  // only load the (heavy) tap video once the section is near the viewport
+  const [tapRef, tapInView] = useInView<HTMLDivElement>({ rootMargin: '300px' })
+
   return (
     <section className="section flow" id="flow">
       <div className="container">
@@ -26,19 +30,23 @@ export default function TapToReview() {
         <Reveal className="flow__stage">
           {/* the tap — a card standing on the table */}
           <div className="flow__tap">
-            <div className="flow__tapMedia">
+            <div className="flow__tapMedia" ref={tapRef}>
               <span className="flow__ripple" aria-hidden="true" />
               <span className="flow__ripple flow__ripple--2" aria-hidden="true" />
-              <video
-                src="/assets/revora-tap.mp4"
-                poster="/assets/revora-product-hero-marble.jpg"
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                aria-label="A hand tapping the REVORA card"
-              />
+              {tapInView ? (
+                <video
+                  src="/assets/revora-tap.mp4"
+                  poster="/assets/poster.jpg"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label="A hand tapping the REVORA card"
+                />
+              ) : (
+                <img src="/assets/poster.jpg" alt="A hand about to tap the REVORA card" />
+              )}
               <span className="flow__tapTag mono">NFC · tap to open</span>
             </div>
             <span className="flow__reflection" aria-hidden="true" />

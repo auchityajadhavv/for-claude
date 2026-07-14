@@ -5,11 +5,15 @@ export default function InTheWild() {
   return (
     <section className="itw" id="wild">
       <div className="itw__media">
-        <img
-          src="/assets/revora-lifestyle.png"
-          alt="A REVORA stand on a dark marble table in a candlelit restaurant"
-          loading="lazy"
-        />
+        <picture>
+          <source srcSet="/assets/revora-lifestyle.webp" type="image/webp" />
+          <img
+            src="/assets/revora-lifestyle.jpg"
+            alt="A REVORA stand on a dark marble table in a candlelit restaurant"
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
         <div className="itw__scrim" />
       </div>
       <div className="container itw__inner">

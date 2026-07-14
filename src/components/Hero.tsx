@@ -1,7 +1,10 @@
-import AmbientField from '../three/AmbientField'
+import { Suspense, lazy } from 'react'
 import TryDemo from './TryDemo'
 import { openDemo } from '../lib/openDemo'
 import './Hero.css'
+
+// defer the 3D field (three.js) so hero text paints immediately
+const AmbientField = lazy(() => import('../three/AmbientField'))
 
 const STATS = [
   { big: '2×', label: 'Google reviews' },
@@ -12,7 +15,9 @@ const STATS = [
 export default function Hero() {
   return (
     <section className="hero" id="top">
-      <AmbientField />
+      <Suspense fallback={null}>
+        <AmbientField />
+      </Suspense>
       <div className="hero__scrim" aria-hidden="true" />
 
       <div className="container hero__inner">

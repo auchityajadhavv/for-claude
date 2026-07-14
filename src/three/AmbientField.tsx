@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useReducedMotion } from '../hooks/useReducedMotion'
@@ -27,9 +27,13 @@ const RINGS = [
   { r: 4.9, rot: [1.4, -0.3, -0.5], color: '#a78bfa', speed: 0.22, phase: 5.9 },
 ]
 
-function Orbit({ tex, reduced }: { tex: THREE.Texture; reduced: boolean }) {
+function Orbit({ tex, reduced, low }: { tex: THREE.Texture; reduced: boolean; low: boolean }) {
   const group = useRef<THREE.Group>(null)
   const electrons = useRef<(THREE.Group | null)[]>([])
+  // fewer rings / segments / trail on low-power devices
+  const rings = low ? RINGS.slice(0, 3) : RINGS
+  const seg = low ? 90 : 140
+  const trail = low ? [0, 1] : [0, 1, 2, 3]
 
   useFrame((state) => {
     const t = state.clock.elapsedTime
@@ -37,7 +41,7 @@ function Orbit({ tex, reduced }: { tex: THREE.Texture; reduced: boolean }) {
       group.current.rotation.y = t * 0.05
       group.current.rotation.x = Math.sin(t * 0.07) * 0.12
     }
-    RINGS.forEach((ring, i) => {
+    rings.forEach((ring, i) => {
       const e = electrons.current[i]
       if (!e) return
       const a = reduced ? ring.phase : t * ring.speed + ring.phase
@@ -61,20 +65,20 @@ function Orbit({ tex, reduced }: { tex: THREE.Texture; reduced: boolean }) {
         <spriteMaterial map={tex} color="#ffffff" transparent opacity={0.95} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
       </sprite>
 
-      {RINGS.map((ring, i) => (
+      {rings.map((ring, i) => (
         <group key={i} rotation={ring.rot as [number, number, number]}>
           {/* the ring + a soft halo behind it */}
           <mesh>
-            <torusGeometry args={[ring.r, 0.006, 8, 140]} />
+            <torusGeometry args={[ring.r, 0.006, 8, seg]} />
             <meshBasicMaterial color={ring.color} transparent opacity={0.6} blending={THREE.AdditiveBlending} toneMapped={false} />
           </mesh>
           <mesh>
-            <torusGeometry args={[ring.r, 0.05, 8, 140]} />
+            <torusGeometry args={[ring.r, 0.05, 8, seg]} />
             <meshBasicMaterial color={ring.color} transparent opacity={0.08} blending={THREE.AdditiveBlending} toneMapped={false} />
           </mesh>
           {/* electron with a short trailing comet */}
           <group ref={(el) => (electrons.current[i] = el)}>
-            {[0, 1, 2, 3].map((k) => (
+            {trail.map((k) => (
               <sprite key={k} scale={k === 0 ? [0.5, 0.5, 1] : [0.34 - k * 0.05, 0.34 - k * 0.05, 1]}>
                 <spriteMaterial map={tex} color={k === 0 ? '#ffffff' : ring.color} transparent opacity={0.6} blending={THREE.AdditiveBlending} depthWrite={false} toneMapped={false} />
               </sprite>
@@ -178,13 +182,37 @@ function Rig({ reduced }: { reduced: boolean }) {
 export default function AmbientField() {
   const reduced = useReducedMotion()
   const tex = useMemo(() => softTexture(), [])
+  const wrapRef = useRef<HTMLDivElement>(null)
+  const [active, setActive] = useState(true)
+  // lighter scene on small screens / low-core devices
+  const low = useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      (window.innerWidth < 720 || (navigator.hardwareConcurrency || 8) <= 4),
+    [],
+  )
+
+  // pause the render loop entirely once the hero scrolls offscreen
+  useEffect(() => {
+    const el = wrapRef.current
+    if (!el) return
+    const obs = new IntersectionObserver(([e]) => setActive(e.isIntersecting), { threshold: 0.01 })
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [])
+
   return (
-    <div className="ambient" aria-hidden="true">
-      <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 9], fov: 46 }} gl={{ alpha: true, antialias: true, powerPreference: 'high-performance' }}>
-        <Nebula tex={tex} reduced={reduced} />
-        <Stardust tex={tex} reduced={reduced} count={90} spread={26} depth={16} size={0.05} opacity={0.5} />
-        <Stardust tex={tex} reduced={reduced} count={180} spread={20} depth={9} size={0.09} opacity={0.9} />
-        <Orbit tex={tex} reduced={reduced} />
+    <div className="ambient" aria-hidden="true" ref={wrapRef}>
+      <Canvas
+        frameloop={active ? 'always' : 'never'}
+        dpr={low ? [1, 1.5] : [1, 2]}
+        camera={{ position: [0, 0, 9], fov: 46 }}
+        gl={{ alpha: true, antialias: !low, powerPreference: 'high-performance' }}
+      >
+        {!low && <Nebula tex={tex} reduced={reduced} />}
+        <Stardust tex={tex} reduced={reduced} count={low ? 40 : 90} spread={26} depth={16} size={0.05} opacity={0.5} />
+        <Stardust tex={tex} reduced={reduced} count={low ? 80 : 180} spread={20} depth={9} size={0.09} opacity={0.9} />
+        <Orbit tex={tex} reduced={reduced} low={low} />
         <Rig reduced={reduced} />
       </Canvas>
     </div>

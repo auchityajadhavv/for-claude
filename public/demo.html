@@ -4,11 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <title>REVORA — Feedback</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&display=swap" rel="stylesheet">
+<script type="module">
+  import * as THREE from '/vendor/three.module.min.js';
+  window.THREE = THREE;
+  document.dispatchEvent(new Event('three-ready'));
+</script>
 <style>
 :root{
   --p:#7C3AED; --s:#9A7FD6; --cyan:#67E8F9; --mag:#F0ABFC;
@@ -467,10 +470,13 @@ function loop(){requestAnimationFrame(loop);const t=clock.getElapsedTime();
   if(!DRAGGING) cardsArr().forEach(c=>{const z=+c.dataset.baseZ,k=z/24;
     c.style.transform=`translateZ(${z}px) translateX(${(nx*6*k).toFixed(1)}px) translateY(${(ny*5*k).toFixed(1)}px)`;});
 }
-if(window.THREE) initGL();
-else{(function css(){requestAnimationFrame(css);if(!(DRAGGING||HOLD)){nx+=(tnx-nx)*.06;ny+=(tny-ny)*.06;}
+function cssBG(){(function css(){requestAnimationFrame(css);if(!(DRAGGING||HOLD)){nx+=(tnx-nx)*.06;ny+=(tny-ny)*.06;}
   panel.style.setProperty('--ry',(nx*6).toFixed(2)+'deg');panel.style.setProperty('--rx',(-ny*5).toFixed(2)+'deg');
   panel.style.setProperty('--tx',(nx*8).toFixed(1)+'px');panel.style.setProperty('--ty',(ny*6).toFixed(1)+'px');})();}
+let __bgStarted=false;
+function startBG(){ if(__bgStarted) return; __bgStarted=true; if(window.THREE) initGL(); else cssBG(); }
+if(window.THREE) startBG();
+else { document.addEventListener('three-ready', startBG, {once:true}); setTimeout(startBG, 1800); }
 </script>
 </body>
 </html>

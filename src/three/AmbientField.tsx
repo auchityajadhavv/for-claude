@@ -179,11 +179,33 @@ function Rig({ reduced }: { reduced: boolean }) {
   return null
 }
 
+function hasWebGL(): boolean {
+  try {
+    const c = document.createElement('canvas')
+    return !!(window.WebGLRenderingContext && (c.getContext('webgl') || c.getContext('experimental-webgl')))
+  } catch {
+    return false
+  }
+}
+
 export default function AmbientField() {
   const reduced = useReducedMotion()
   const tex = useMemo(() => softTexture(), [])
   const wrapRef = useRef<HTMLDivElement>(null)
   const [active, setActive] = useState(true)
+  const webgl = useMemo(() => hasWebGL(), [])
+
+  // CSS-only fallback so the hero never renders an empty void without WebGL
+  if (!webgl) {
+    return (
+      <div className="ambient ambient--fallback" aria-hidden="true">
+        <span className="ambient__glow" />
+        <span className="ambient__ring ambient__ring--1" />
+        <span className="ambient__ring ambient__ring--2" />
+        <span className="ambient__ring ambient__ring--3" />
+      </div>
+    )
+  }
   // lighter scene on small screens / low-core devices
   const low = useMemo(
     () =>

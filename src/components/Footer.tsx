@@ -1,18 +1,34 @@
 import Logo from './Logo'
+import { openDemo } from '../lib/openDemo'
 import './Footer.css'
 
-const COLS = [
+type Link = { label: string; href?: string; action?: 'demo' }
+
+const COLS: { title: string; links: Link[] }[] = [
   {
-    title: 'Product',
-    links: ['How it works', 'Why Revora', 'Products', 'Pricing'],
+    title: 'Explore',
+    links: [
+      { label: 'How it works', href: '#flow' },
+      { label: 'Why Revora', href: '#why' },
+      { label: 'Products', href: '#products' },
+      { label: 'Pricing', href: '#pricing' },
+      { label: 'FAQ', href: '#faq' },
+    ],
+  },
+  {
+    title: 'Get started',
+    links: [
+      { label: 'Book a demo', action: 'demo' },
+      { label: 'See the demo', href: '#flow' },
+      { label: 'On the map', href: '#map' },
+    ],
   },
   {
     title: 'Company',
-    links: ['About', 'Careers', 'Contact', 'Blog'],
-  },
-  {
-    title: 'Legal',
-    links: ['Privacy', 'Terms', 'Data & security'],
+    links: [
+      { label: 'Contact us', action: 'demo' },
+      { label: 'hello@revora.in', href: 'mailto:hello@revora.in' },
+    ],
   },
 ]
 
@@ -30,11 +46,17 @@ export default function Footer() {
             {COLS.map((c) => (
               <nav className="footer__col" key={c.title} aria-label={c.title}>
                 <span className="mono footer__colTitle">{c.title}</span>
-                {c.links.map((l) => (
-                  <a key={l} href="#top" className="footer__link">
-                    {l}
-                  </a>
-                ))}
+                {c.links.map((l) =>
+                  l.action === 'demo' ? (
+                    <button key={l.label} className="footer__link" onClick={() => openDemo()}>
+                      {l.label}
+                    </button>
+                  ) : (
+                    <a key={l.label} href={l.href} className="footer__link">
+                      {l.label}
+                    </a>
+                  ),
+                )}
               </nav>
             ))}
           </div>

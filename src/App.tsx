@@ -1,42 +1,43 @@
-import { Suspense, lazy } from 'react'
-import Starfield from './components/Starfield'
-import Nav from './components/Nav'
-import Hero from './components/Hero'
-import TapToReview from './components/TapToReview'
-import WhyReviews from './components/WhyReviews'
-import WhyRevora from './components/WhyRevora'
-import InTheWild from './components/InTheWild'
-import Products from './components/Products'
-import Pricing from './components/Pricing'
-import Faq from './components/Faq'
-import Cta from './components/Cta'
-import Footer from './components/Footer'
-import DemoModal from './components/DemoModal'
+import { lazy, Suspense } from 'react'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import MarketingSite from './MarketingSite'
 
-// map pulls in maplibre-gl (~200kb gzip) and lives below the fold → code-split it
-const MumbaiMap = lazy(() => import('./map/MumbaiMap'))
+// the admin area is code-split so none of it ships with the marketing site
+const Login = lazy(() => import('./pages/Login'))
+const Signup = lazy(() => import('./pages/Signup'))
+const Dashboard = lazy(() => import('./pages/Dashboard'))
 
 export default function App() {
   return (
-    <>
-      <Starfield />
-      <Nav />
-      <main>
-        <Hero />
-        <TapToReview />
-        <WhyReviews />
-        <WhyRevora />
-        <InTheWild />
-        <Suspense fallback={<div style={{ minHeight: '60vh' }} />}>
-          <MumbaiMap />
-        </Suspense>
-        <Products />
-        <Pricing />
-        <Faq />
-        <Cta />
-      </main>
-      <Footer />
-      <DemoModal />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<MarketingSite />} />
+        <Route
+          path="/login"
+          element={
+            <Suspense fallback={null}>
+              <Login />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <Suspense fallback={null}>
+              <Signup />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+            <Suspense fallback={null}>
+              <Dashboard />
+            </Suspense>
+          }
+        />
+        <Route path="*" element={<MarketingSite />} />
+      </Routes>
+    </BrowserRouter>
   )
 }

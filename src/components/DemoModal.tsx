@@ -3,6 +3,11 @@ import { createPortal } from 'react-dom'
 import { DEMO_EVENT } from '../lib/openDemo'
 import './DemoModal.css'
 
+// cheap env check so the marketing bundle never statically pulls in supabase-js
+const backendConfigured = Boolean(
+  import.meta.env.VITE_SUPABASE_URL && import.meta.env.VITE_SUPABASE_ANON_KEY,
+)
+
 type Errors = Partial<Record<'name' | 'venue' | 'email', string>>
 const emailOk = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
 
@@ -56,12 +61,34 @@ export default function DemoModal() {
     return Object.keys(next).length === 0
   }
 
-  const submit = (e: React.FormEvent) => {
+  const [submitError, setSubmitError] = useState('')
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSubmitError('')
     if (!validate()) return
     setStatus('submitting')
-    // Phase 3: POST { ...form, plan } to the demo-request endpoint.
-    setTimeout(() => setStatus('done'), 800)
+    try {
+      if (backendConfigured) {
+        // lands in the owner dashboard (demo_requests table) — loaded on demand
+        const { supabase } = await import('../lib/supabase')
+        if (!supabase) throw new Error('Backend unavailable.')
+        const { error } = await supabase.from('demo_requests').insert({
+          name: form.name.trim(),
+          venue: form.venue.trim(),
+          email: form.email.trim(),
+          message: form.message.trim() || null,
+          plan: plan || null,
+        })
+        if (error) throw error
+      } else {
+        await new Promise((r) => setTimeout(r, 700))
+      }
+      setStatus('done')
+    } catch (err) {
+      setStatus('idle')
+      setSubmitError((err as Error).message || 'Could not send. Please try again.')
+    }
   }
 
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -111,6 +138,7 @@ export default function DemoModal() {
                 <textarea value={form.message} onChange={set('message')} rows={2} placeholder="Number of counters, timing, questions…" />
               </Field>
 
+              {submitError && <p className="dm__error" role="alert">{submitError}</p>}
               <button className="btn btn-primary dm__submit" type="submit" disabled={status === 'submitting'}>
                 {status === 'submitting' ? 'Sending…' : 'Request my demo'}
               </button>

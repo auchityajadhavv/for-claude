@@ -11,6 +11,7 @@ export default defineConfig({
         manualChunks: {
           three: ['three', '@react-three/fiber', '@react-three/drei'],
           react: ['react', 'react-dom'],
+          supabase: ['@supabase/supabase-js'],
         },
       },
     },

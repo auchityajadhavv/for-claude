@@ -30,7 +30,12 @@ export default function AuthPage({ mode }: { mode: 'login' | 'signup' }) {
     setBusy(true)
     try {
       if (isSignup) {
-        const { data, error } = await supabase.auth.signUp({ email, password })
+        const { data, error } = await supabase.auth.signUp({
+          email,
+          password,
+          // send any confirmation link back to the live dashboard, not localhost
+          options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+        })
         if (error) throw error
         if (data.session) navigate('/dashboard')
         else setNotice('Account created. Check your email to confirm, then sign in.')
